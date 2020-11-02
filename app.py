@@ -57,6 +57,6 @@ if __name__=="__main__":
     db.init_app(app)
     db.app = app
     db.create_all()
-    app.run( host="14.32.18.29", port = 5008, debug= True )
+    app.run( host="0.0.0.0", port = 5008, debug= True )
 
 
