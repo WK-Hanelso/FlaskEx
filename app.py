@@ -3,9 +3,11 @@ from flask import Flask
 from flask import request
 from flask import redirect
 from flask import render_template
+import datetime
 
 from models import db
 from models import Fcuser
+from models import LED_nomdle
 
 from ledControl import *
 
@@ -15,12 +17,38 @@ app = Flask(__name__ )
 def turnMode( color, mode ):
 
     objLed = LedController()
+    red = 0
+    yellow = 0
+    green = 0
+    now = datetime.datetime.now()
+
+    time = now.strftime( "%Y-%m-%d-%H:%M:%S")
 
     if color != "all":
         objLed.controlLed( list( color ), int( mode ) )
 
     else:
         objLed.controlAllLed( int(mode ) )
+        red = 1
+        yellow = 1
+        green = 1
+
+    if 'r' in color:
+        red = 1
+    if 'y' in color:
+        yellow = 1
+    if 'g' in color:
+        green = 1
+
+    # db
+    led_db = LED_nomdle()
+    led_db.red = red
+    led_db.yellow = yellow
+    led_db.green = green
+    led_db.time = time
+
+    db.session.add( led_db )
+    db.session.commit()
 
     return render_template("led.html", color = color, mode = mode)
 
