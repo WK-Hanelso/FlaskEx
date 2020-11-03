@@ -23,6 +23,12 @@ def turnMode( color, mode ):
     elif color == "green":
         pin = 5
 
+    if mode == "1":
+        mode = 1
+    elif mode == "0":
+        mode = 0
+
+    led.WGsetup()
     led.ledControl( pin, mode )
 
     return render_template("led.html", color = color, mode = mode)
