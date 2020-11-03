@@ -8,28 +8,20 @@ from models import db
 from models import Fcuser
 
 from ctypes import *
+from ledCont import LedController
 
 app = Flask(__name__ )
 
 @app.route("/led/<color>/<mode>")
 def turnMode( color, mode ):
 
-    led = CDLL("./ledCont.so")
+    objLed = LedController()
 
-    if color == "red":
-        pin = 1
-    elif color == "yellow":
-        pin = 4
-    elif color == "green":
-        pin = 5
+    if color != "all":
+        objLed.controlLed( list( color ), int( mode ) )
 
-    if mode == "1":
-        mode = 1
-    elif mode == "0":
-        mode = 0
-
-    led.WGsetup()
-    led.ledControl( pin, mode )
+    else:
+        objLed.controlAllLed( int(mode ) )
 
     return render_template("led.html", color = color, mode = mode)
 
