@@ -24,21 +24,23 @@ def turnMode( color, mode ):
 
     time = now.strftime( "%Y-%m-%d-%H:%M:%S")
 
+    objLed.controlAllLed( 0 )
+
     if color != "all":
         objLed.controlLed( list( color ), int( mode ) )
 
     else:
         objLed.controlAllLed( int(mode ) )
-        red = 1
-        yellow = 1
-        green = 1
+        red = int(mode)
+        yellow = int(mode)
+        green = int(mode) 
 
     if 'r' in color:
-        red = 1
+        red = int(mode)
     if 'y' in color:
-        yellow = 1
+        yellow = int(mode) 
     if 'g' in color:
-        green = 1
+        green = int(mode) 
 
     # db
     led_db = LED_nomdle()

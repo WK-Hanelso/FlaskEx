@@ -32,3 +32,4 @@ class LedController():
         for tmpStr in self.dictColorPin.keys():
             self.led.ledControl( self.dictColorPin[ tmpStr ], mode )
 
+
