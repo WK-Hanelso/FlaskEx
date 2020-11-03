@@ -7,7 +7,6 @@ from flask import render_template
 from models import db
 from models import Fcuser
 
-from ctypes import *
 from ledCont import LedController
 
 app = Flask(__name__ )
