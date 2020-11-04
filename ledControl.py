@@ -3,6 +3,8 @@
 
 class LedController():
 
+    dictColor = {}
+
     def __init__( self, listColor = [], nMode = 0 ):
 
         if type( listColor) != list:
@@ -13,8 +15,8 @@ class LedController():
 
         self.listColor = listColor
         self.nMode = nMode
-        self.dictColor = {}
-        self.dictColor = self.setDictColor( listColor )
+        
+        self.setDictColor( listColor )
 
         self.C_LED = CLedController()
 
@@ -28,10 +30,10 @@ class LedController():
         if type( listColor ) != list:
             print( "not list")
         else:
-            self.dictColor = self.setDictColor( listColor )
+            self.setDictColor( listColor )
+
 
     def setDictColor( self, listColor ):
-        self.dictColor = {}
         if 'r' in listColor:
             self.dictColor["RED"] = 1
         if 'y' in listColor:
