@@ -34,6 +34,7 @@ class LedController():
 
 
     def setDictColor( self, listColor ):
+        self.dictColor = {}
         if 'r' in listColor:
             self.dictColor["RED"] = 1
         if 'y' in listColor:
