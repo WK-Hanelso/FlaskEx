@@ -15,4 +15,5 @@ class LED_nomdle( db.Model ):
     red = db.Column( db.Integer )
     green = db.Column( db.Integer )
     yellow = db.Column( db.Integer )
+    status = db.Column( db.String(20) )
     time = db.Column( db.String(24) )

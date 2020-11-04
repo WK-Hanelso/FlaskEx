@@ -12,17 +12,18 @@ from models import LED_nomdle
 from ledControl import *
 
 app = Flask(__name__ )
-objLed = LedController()
+status = {}
 
 @app.route("/led/<color>/<mode>")
 def turnMode( color, mode ):
-    global objLed
+    global status
     red = 0
     yellow = 0
     green = 0
     time = datetime.datetime.now().strftime( "%Y-%m-%d-%H:%M:%S")
 
     # LED 컨트롤러 생성
+    objLed = LedController()
 
     if color == "all":
         color = "rgy"
@@ -36,16 +37,20 @@ def turnMode( color, mode ):
     # db값 확인
     if objLed.isSetColor( "RED" ):
         red = int( mode )
+        status["RED"] = red
     if objLed.isSetColor( "YELLOW"):
         yellow = int( mode )
+        status["YELLOW"] = yellow
     if objLed.isSetColor( "GREEN" ):
         green = int( mode )
+        status["GREEN"] = green
 
     # db
     led_db = LED_nomdle()
     led_db.red = red
     led_db.yellow = yellow
     led_db.green = green
+    led_db.status = str(status)
     led_db.time = time
 
     db.session.add( led_db )
