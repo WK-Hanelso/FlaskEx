@@ -12,6 +12,7 @@ from models import LED_nomdle
 from ledControl import *
 
 app = Flask(__name__ )
+# status는 현재 gpio led 상태를 저장하는 변수
 status = {}
 
 @app.route("/led/<color>/<mode>")
