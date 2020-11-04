@@ -15,32 +15,32 @@ app = Flask(__name__ )
 
 @app.route("/led/<color>/<mode>")
 def turnMode( color, mode ):
-
-    objLed = LedController()
     red = 0
     yellow = 0
     green = 0
-    now = datetime.datetime.now()
+    time = datetime.datetime.now().strftime( "%Y-%m-%d-%H:%M:%S")
 
-    time = now.strftime( "%Y-%m-%d-%H:%M:%S")
+    # LED 컨트롤러 생성
+    objLed = LedController()
+    # LED 초기화
+    objLed.actLed()
 
-    objLed.controlAllLed( 0 )
+    if color == "all":
+        color = "rgy"
 
-    if color != "all":
-        objLed.controlLed( list( color ), int( mode ) )
+    # LED 설정값 set
+    objLed.setListColor( list( color ) )
+    objLed.setMode( int( mode ) )
+    
+    objLed.actLed()
 
-    else:
-        objLed.controlAllLed( int(mode ) )
-        red = int(mode)
-        yellow = int(mode)
-        green = int(mode) 
-
-    if 'r' in color:
-        red = int(mode)
-    if 'y' in color:
-        yellow = int(mode) 
-    if 'g' in color:
-        green = int(mode) 
+    # db값 확인
+    if objLed.isSetColor( "RED" ):
+        red = int( mode )
+    if objLed.isSetColor( "YELLOW"):
+        yellow = int( mode )
+    if objLed.isSetColor( "GREEN" ):
+        green = int( mode )
 
     # db
     led_db = LED_nomdle()

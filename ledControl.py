@@ -1,35 +1,50 @@
-﻿from ctypes import *
+﻿from clibwrapper import CLedController
 
 
 class LedController():
 
-    def __init__( self ):
-        self.led = CDLL( "./ledCont.so")
+    def __init__( self, listColor = [], nMode = 0 ):
 
-        self.dictColorPin = { 'r': 1, 'y': 4, 'g': 5 }
+        if type( listColor) != list:
+            print("error color")
 
-        self.led.WGsetup()
-
-    def controlLed( self, color, mode ):
-
-        dictColorPin = {}
-
-        if mode not in [0,1]:
+        if nMode not in [ 0, 1 ]:
             print("error mode")
 
-        if type( color ) != list:
-            print( "error color")
+        self.listColor = listColor
+        self.nMode = nMode
 
-        for tmpStr in color:
-            if tmpStr in self.dictColorPin.keys():
-                dictColorPin[ tmpStr ] = self.dictColorPin[ tmpStr ]
+        self.dictColor = setDictColor( listColor )
 
-        for tmp in dictColorPin.keys():
-            self.led.ledControl( self.dictColorPin[ tmp ], mode )
+        self.C_LED = CLedController()
 
-    def controlAllLed( self, mode ):
+    def setMode( self, nMode ):
+        if nMode not in [ 0, 1 ]:
+            print("not 0 or 1")
+        else:
+            self.nMode = nMode
 
-        for tmpStr in self.dictColorPin.keys():
-            self.led.ledControl( self.dictColorPin[ tmpStr ], mode )
+    def setListColor( self, listColor ):
+        if type( listColor ) != list:
+            print( "not list")
+        else:
+            self.dictColor = setDictColor( listColor )
+
+    def setDictColor( self, listColor ):
+        if 'r' in listColor:
+            self.dictColor["RED"] = 1
+        if 'y' in listColor:
+            self.dictColor["YELLOW"] = 4
+        if 'g' in listColor:
+            self.dictColor["GREEN"] = 5
+
+
+    def actLed( self ):
+
+        for strKey in self.dictColor.keys():
+            self.C_LED.ledControl( self.dictColor[ strKey ], self.nMode )
+
+    def isSetColor( self, strKey ):
+        return strKey in self.dictColor.keys()
 
 
