@@ -3,6 +3,8 @@
 
 class LedController():
 
+    dictColor = {}
+
     def __init__( self, listColor = [], nMode = 0 ):
 
         if type( listColor) != list:
