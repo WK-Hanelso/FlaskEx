@@ -41,11 +41,6 @@ class LedController():
         if 'g' in listColor:
             self.dictColor["GREEN"] = 5
 
-    def actOffLed( self ):
-        self.C_LED.ledControl( 1, 0 )
-        self.C_LED.ledControl( 4, 0 )
-        self.C_LED.ledControl( 5, 0 )
-
     def actLed( self ):
 
         for strKey in self.dictColor.keys():

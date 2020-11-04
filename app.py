@@ -22,8 +22,6 @@ def turnMode( color, mode ):
 
     # LED 컨트롤러 생성
     objLed = LedController()
-    # LED 초기화
-    objLed.actOffLed()
 
     if color == "all":
         color = "rgy"
