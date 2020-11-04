@@ -12,16 +12,17 @@ from models import LED_nomdle
 from ledControl import *
 
 app = Flask(__name__ )
+objLed = LedController()
 
 @app.route("/led/<color>/<mode>")
 def turnMode( color, mode ):
+    global objLed
     red = 0
     yellow = 0
     green = 0
     time = datetime.datetime.now().strftime( "%Y-%m-%d-%H:%M:%S")
 
     # LED 컨트롤러 생성
-    objLed = LedController()
 
     if color == "all":
         color = "rgy"
